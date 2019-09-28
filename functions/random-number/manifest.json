@@ -1,0 +1,10 @@
+{
+  "id": "a765bfe31dc043b6bb4c8a0cded2487a",
+  "version": "0.0.0",
+  "name": "random-number",
+  "observers": {
+    "444e1e5ad06f448bb01d990db2f6b1c4": "0.0.0"
+  },
+  "observable": true,
+  "note:observable indicates that the function can be observed. non-observable functions can't be added as observable, so they have no output... possible to do without?": null
+}

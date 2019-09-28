@@ -1,0 +1,10 @@
+{
+  "id": "704e1016a7df4eba8e1737e3faa25bf2",
+  "version": "0.0.0",
+  "name": "tty-ask-question",
+  "observers": {
+    "444e1e5ad06f448bb01d990db2f6b1c4": "0.0.0"
+  },
+  "observable": true,
+  "note:observable indicates that the function can be observed. non-observable functions can't be added as observable, so they have no output... possible to do without?": null
+}

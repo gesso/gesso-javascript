@@ -1,0 +1,126 @@
+# Compose file version 3 reference
+# https://docs.docker.com/compose/compose-file/
+version: "3"
+
+services:
+  # consumer:
+  #   build:
+  #     context: ./consumer
+  #     dockerfile: Dockerfile
+  #   working_dir: /usr/src/app
+  #   volumes:
+  #     - ./consumer:/usr/src/app
+  #   networks:
+  #     - gesso-network
+  #   environment:
+  #     - MESSAGE_QUEUE=amqp://rabbitmq
+  #   links:
+  #     - rabbitmq
+
+  # TODO: cache
+  # RabbitMQ
+  # See: https://github.com/bitnami/bitnami-docker-rabbitmq#configuration.
+  queue:
+    # TODO: docker run --name gesso-queue -p 127.0.0.1:4369:4369 -p 127.0.0.1:5671:5671 -p 127.0.0.1:5672:5672 -p 127.0.0.1:25672:25672 -p 127.0.0.1:15671:15671 -p 127.0.0.1:15672:15672 --hostname gesso-queue-host -e RABBITMQ_DEFAULT_USER=guest -e RABBITMQ_DEFAULT_PASS=guest -d rabbitmq:3.7.5-management
+    # TODO: docker run --name gesso-queue -p 127.0.0.1:4369:4369 -p 127.0.0.1:5671:5671 -p 127.0.0.1:5672:5672 -p 127.0.0.1:25672:25672 -p 127.0.0.1:15671:15671 -p 127.0.0.1:15672:15672
+    image: rabbitmq:3.7.5-management # rabbitmq:3.7.5-management
+    # deploy:
+    #   replicas: 1 # Default replica count.
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    # TODO: Set hostname (scalable for RabbitMQ cluster). See https://stackoverflow.com/questions/29924843/how-do-i-set-hostname-in-docker-compose.
+    # hostname: gesso-queue
+    environment:
+      # RABBITMQ_ERLANG_COOKIE: "SWQOKODSQALRPCLNMEQG"
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+      # - RABBITMQ_PASSWORD=my_password
+      # - RABBITMQ_DEFAULT_VHOST=/
+    # volumes:
+    # - /path/to/rabbitmq-persistence:/bitnami
+    # Specify volume to enable persistence. Why should this be added? There must be a specific reason for Gesso.
+    # See: https://github.com/bitnami/bitnami-docker-rabbitmq#persisting-your-application.
+    networks:
+      - gesso-network
+
+    restart: always
+
+    hostname: "queue"
+    # environment:
+    #   RABBITMQ_ERLANG_COOKIE: "SWQOKODSQALRPCLNMEQG"
+    #   RABBITMQ_DEFAULT_USER: "guest"
+    #   RABBITMQ_DEFAULT_PASS: "guest"
+    #   RABBITMQ_DEFAULT_VHOST: "/"
+    # ports:
+    #   - "15672:15672"
+    #   - "5672:5672"
+    labels:
+      NAME: "queue"
+
+  # TODO: Add another 
+  # database:
+  #   image: postgres
+  #   restart: always
+  #   environment:
+  #     POSTGRES_PASSWORD: gesso
+  #   networks:
+  #     - gesso-network
+
+  # TODO: elasticsearch
+  # index:
+  #   image: docker.elastic.co/elasticsearch/elasticsearch:7.2.0
+  #   container_name: es01
+  #   environment:
+  #     - node.name=es01
+  #     - discovery.seed_hosts=es02
+  #     - cluster.initial_master_nodes=es01,es02
+  #     - cluster.name=docker-cluster
+  #     - bootstrap.memory_lock=true
+  #     - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+  #   ulimits:
+  #     memlock:
+  #       soft: -1
+  #       hard: -1
+  #   volumes:
+  #     - esdata01:/usr/share/elasticsearch/data
+  #   ports:
+  #     - 9200:9200
+  #   networks:
+  #     - gesso-network
+
+  # volumes:
+  #   esdata01:
+  #     driver: local
+
+  host:
+    depends_on:
+      - queue
+      # - cache
+      # - database
+      # - index
+    build:
+      context: . # "Either a path to a directory containing a Dockerfile, or a url to a git repository."
+      dockerfile: Dockerfile
+    working_dir: /home/gesso # /usr/src/gesso
+    # volumes:
+    #   - ./host:/usr/src/gesso # TODO: ~/.gesso/target/DOCKER-CLUSTER/hosts/HOST_UUID
+    # TODO: Expose interface to communicate with Gesso host (master).
+    # TODO: Commands to install dependencies, install `gesso`, and start the `gesso service` (announces to make available for programming/executing tasks).
+    # command: ["bundle", "exec", "thin", "-p", "3000"]
+    networks:
+      - gesso-network
+      # What do multiple networks do? How could that be used?
+    # TODO: What does "outside" and "external" do?
+    # networks:
+    #   outside:
+    #     external: true
+    # environment:
+    #   - MESSAGE_QUEUE=amqp://rabbitmq
+    links:
+      - queue
+      # - database
+
+networks:
+  gesso-network:
+    driver: bridge

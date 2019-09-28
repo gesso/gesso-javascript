@@ -1,0 +1,11 @@
+{
+  "edit": "0.0.0",
+  "build-sitemap": "0.0.0",
+  "cv-detect-object": "0.0.0",
+  "download-google-images": "0.0.0",
+  "get-arxiv": "0.0.0",
+  "get-wikipedia-page": "0.0.0",
+  "pos-tagger": "0.0.0",
+  "run-crawler": "0.0.0",
+  "scrape-github": "0.0.0"
+}

@@ -1,0 +1,50 @@
+{
+  "id": "038ae7894f1f412e8ffb7633f6668ce4",
+  "name": "interactive-chatbot",
+  "description": "Interactive Chatbot with History: Reads user input, compares similarity of the input with previous input, and uses TTS to read the most similar match.",
+  "start": {
+    "function": {
+      "id": "a765bfe31dc043b6bb4c8a0cded2487a",
+      "version": "0.0.0"
+    }
+  },
+  "mode": "tty",
+  "functions": {
+    "a765bfe31dc043b6bb4c8a0cded2487a": {
+      "name": "get-input",
+      "version": "0.0.0",
+      "observers": {
+        "91e05ffb75474d1b9a6d3657938b10ec": "0.0.0"
+      }
+    },
+    "91e05ffb75474d1b9a6d3657938b10ec": {
+      "name": "store-input",
+      "version": "0.0.0",
+      "observers": {
+        "34dfcd8602704c439a53a3067b4d1ff1": "0.0.0"
+      }
+    },
+    "34dfcd8602704c439a53a3067b4d1ff1": {
+      "name": "get-most-similar-phrase",
+      "version": "0.0.0",
+      "observers": {
+        "9ef67fb8142e49679747b48f4fa3ae92": "0.0.0"
+      }
+    },
+    "9ef67fb8142e49679747b48f4fa3ae92": {
+      "name": "text-to-speech",
+      "version": "0.0.0",
+      "input": {
+        "function": "9ef67fb8142e49679747b48f4fa3ae92",
+        "version": "0.0.0"
+      },
+      "observers": {
+        "2509fd5940f4440bbefbcddc757b6045": "0.0.0"
+      }
+    },
+    "2509fd5940f4440bbefbcddc757b6045": {
+      "name": "save-file",
+      "version": "0.0.0"
+    }
+  }
+}

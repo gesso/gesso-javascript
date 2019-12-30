@@ -40,4 +40,4 @@ class Function {
 
 module.exports.Function = Function;
 
-module.exports.manifest = require("./manifest.json");
+module.exports.manifest = require("./manifest.json.js.js");

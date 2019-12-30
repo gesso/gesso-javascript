@@ -2,6 +2,25 @@
   "id": "9ef67fb8142e49679747b48f4fa3ae92",
   "version": "0.0.0",
   "name": "text-to-speech",
+  "input": {
+    "text": {
+      "type": "string",
+      "require": true
+    },
+    "voice": {
+      "type": "object",
+      "properties": {
+        "voice": {
+          "type": "string",
+          "require": false
+        },
+        "rate": {
+          "type": "number",
+          "require": false
+        }
+      }
+    }
+  },
   "observers": {
     "444e1e5ad06f448bb01d990db2f6b1c4": "0.0.0"
   }

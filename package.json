@@ -12,7 +12,7 @@
     "@google-cloud/speech": "^3.3.0",
     "afinn-165": "^1.0.3",
     "chalk-pipe": "^2.0.0",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "ffi": "^2.3.0",
     "inquirer": "^7.0.0",
     "lodash": "^4.17.15",
